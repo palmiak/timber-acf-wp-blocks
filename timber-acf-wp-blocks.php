@@ -13,13 +13,6 @@ if ( ! function_exists( 'add_action' ) ) {
 	return;
 }
 
-// Add the default blocks location, 'views/blocks', via filter.
-add_filter(
-	'timber/acf-gutenberg-blocks-templates',
-	function () {
-		return [ 'views/blocks' ];
-	}
-);
 /**
  * Create blocks based on templates found in Timber's "views/blocks" directory
  */
@@ -27,7 +20,8 @@ add_action(
 	'acf/init',
 	function () {
 		// Get an array of directories containing blocks.
-		$directories = apply_filters( 'timber/acf-gutenberg-blocks-templates', [] );
+		$directories = apply_filters( 'timber/acf-gutenberg-blocks-templates', ['views/blocks'] );
+
 		// Check whether ACF exists before continuing.
 		foreach ( $directories as $dir ) {
 			// Sanity check whether the directory we're iterating over exists first.
@@ -58,6 +52,9 @@ add_action(
 							'supports_align'    => 'SupportsAlign',
 							'supports_mode'     => 'SupportsMode',
 							'supports_multiple' => 'SupportsMultiple',
+							'enqueue_style'     => 'EnqueueStyle',
+							'enqueue_script'    => 'EnqueueScript',
+							'enqueue_assets'    => 'EnqueueAssets',
 						]
 					);
 
@@ -77,6 +74,9 @@ add_action(
 						'keywords'        => explode( ' ', $file_headers['keywords'] ),
 						'mode'            => $file_headers['mode'],
 						'render_callback' => 'timber_blocks_callback',
+						'enqueue_style'   => $file_headers['enqueue_style'],
+						'enqueue_script'  => $file_headers['enqueue_script'],
+						'enqueue_assets'  => $file_headers['enqueue_assets'],
 					];
 					// If the PostTypes header is set in the template, restrict this block to those types.
 					if ( ! empty( $file_headers['post_types'] ) ) {
@@ -117,5 +117,20 @@ function timber_blocks_callback( $block, $content = '', $is_preview = false, $po
 	$context['is_preview'] = $is_preview;
 	$context['fields']     = get_fields();
 
-	Timber::render( "views/blocks/${slug}.twig", $context );
+	$paths = timber_acf_path_render( $slug );
+
+	Timber::render( $paths, $context );
+}
+
+/**
+ * Generates array with paths and slugs
+ */
+function timber_acf_path_render( $slug ) {
+	$directories = apply_filters( 'timber/acf-gutenberg-blocks-templates', ['views/blocks'] );
+
+	foreach( $directories as $directory ) {
+		$ret[] = $directory . "/{$slug}.twig";
+	}
+
+	return $ret;
 }

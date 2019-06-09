@@ -22,6 +22,9 @@ Add twig templates to `views/blocks` which get and use ACF data. Each template r
   SupportsAlign:
   SupportsMode:
   SupportsMultiple:
+  EnqueueStyle:
+  EnqueueScript:
+  EnqueueAssets:
 #}
 ```
 
@@ -61,5 +64,5 @@ Add twig templates to `views/blocks` which get and use ACF data. Each template r
 Once a block is created you'll be able to assign ACF fields to it using the standard Custom Fields interface in WordPress.
 
 ## Read more about this
-- [Easiest way for Gutenberg Blocks with Timber and ACF Blocks](https://medium.com/@maciejpalmowski/easiest-way-for-gutenberg-block-with-timber-and-acf-blocks-29cbe2fda096) 
+- [Easiest way for Gutenberg Blocks with Timber and ACF Blocks](https://medium.com/@maciejpalmowski/easiest-way-for-gutenberg-block-with-timber-and-acf-blocks-29cbe2fda096)
 - [Prostszy sposób na Gutenberga przy użyciu ACF Blocks](https://pandify.pl/2019/06/prostszy-sposob-na-gutenberga-przy-uzyciu-acf-blocks/)
