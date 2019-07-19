@@ -52,6 +52,7 @@ add_action(
 							'supports_align'    => 'SupportsAlign',
 							'supports_mode'     => 'SupportsMode',
 							'supports_multiple' => 'SupportsMultiple',
+							'supports_anchor'   => 'SupportsAnchor',
 							'enqueue_style'     => 'EnqueueStyle',
 							'enqueue_script'    => 'EnqueueScript',
 							'enqueue_assets'    => 'EnqueueAssets',
@@ -93,6 +94,10 @@ add_action(
 					// If the SupportsMultiple header is set in the template, restrict this block multiple feature.
 					if ( ! empty( $file_headers['supports_multiple'] ) ) {
 						$data['supports']['multiple'] = 'true' === $file_headers['supports_multiple'] ? true : false;
+					}
+					// If the SupportsAnchor header is set in the template, restrict this block anchor feature.
+					if ( ! empty( $file_headers['supports_anchor'] ) ) {
+						$data['supports']['anchor'] = 'true' === $file_headers['supports_anchor'] ? true : false;
 					}
 
 					// Register the block with ACF.
