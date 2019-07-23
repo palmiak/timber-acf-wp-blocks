@@ -7,6 +7,9 @@ Run the following in your Timber-based theme directory:
 composer require "palmiak/timber-acf-wp-blocks"
 ```
 
+## Contributors
+This plugin is build with help of contributors: [roylodder](https://github.com/roylodder)
+
 ## Creating blocks
 Add twig templates to `views/blocks` which get and use ACF data. Each template requires a comment block with some data in it:
 ```twig
@@ -22,6 +25,7 @@ Add twig templates to `views/blocks` which get and use ACF data. Each template r
   SupportsAlign:
   SupportsMode:
   SupportsMultiple:
+  SupportsAnchor:
   EnqueueStyle:
   EnqueueScript:
   EnqueueAssets:
