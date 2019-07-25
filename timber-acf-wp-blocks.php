@@ -116,7 +116,7 @@ function timber_blocks_callback( $block, $content = '', $is_preview = false, $po
 	$context = Timber::get_context();
 	$slug    = str_replace( 'acf/', '', $block['name'] );
 
-	$context['block']      = $block;
+$context['block']      = $block;
 	$context['post_id']    = $post_id;
 	$context['slug']       = $slug;
 	$context['is_preview'] = $is_preview;
