@@ -1,6 +1,8 @@
 <?php
 /**
  * Check whether WordPress and ACF are available; bail if not.
+ *
+ * @package timber-acf-wp-blocks
  **/
 
 if ( ! function_exists( 'acf_register_block' ) ) {
@@ -20,7 +22,7 @@ add_action(
 	'acf/init',
 	function () {
 		// Get an array of directories containing blocks.
-		$directories = apply_filters( 'timber/acf-gutenberg-blocks-templates', ['views/blocks'] );
+		$directories = apply_filters( 'timber/acf-gutenberg-blocks-templates', [ 'views/blocks' ] );
 
 		// Check whether ACF exists before continuing.
 		foreach ( $directories as $dir ) {
@@ -79,23 +81,30 @@ add_action(
 						'enqueue_script'  => $file_headers['enqueue_script'],
 						'enqueue_assets'  => $file_headers['enqueue_assets'],
 					];
-					// If the PostTypes header is set in the template, restrict this block to those types.
+					// If the PostTypes header is set in the template, restrict this block
+					// to those types.
 					if ( ! empty( $file_headers['post_types'] ) ) {
 						$data['post_types'] = explode( ' ', $file_headers['post_types'] );
 					}
-					// If the SupportsAlign header is set in the template, restrict this block to those aligns.
+					// If the SupportsAlign header is set in the template, restrict this block
+					// to those aligns.
 					if ( ! empty( $file_headers['supports_align'] ) ) {
-						$data['supports']['align'] = in_array( $file_headers['supports_align'], [ 'true', 'false' ], true ) ? filter_var( $file_headers['supports_align'], FILTER_VALIDATE_BOOLEAN ) : explode( ' ', $file_headers['supports_align'] );
+						$data['supports']['align'] = in_array( $file_headers['supports_align'], [ 'true', 'false' ], true ) ?
+						filter_var( $file_headers['supports_align'], FILTER_VALIDATE_BOOLEAN ) :
+						explode( ' ', $file_headers['supports_align'] );
 					}
-					// If the SupportsMode header is set in the template, restrict this block mode feature.
+					// If the SupportsMode header is set in the template, restrict this block
+					// mode feature.
 					if ( ! empty( $file_headers['supports_mode'] ) ) {
 						$data['supports']['mode'] = 'true' === $file_headers['supports_mode'] ? true : false;
 					}
-					// If the SupportsMultiple header is set in the template, restrict this block multiple feature.
+					// If the SupportsMultiple header is set in the template, restrict this block
+					// multiple feature.
 					if ( ! empty( $file_headers['supports_multiple'] ) ) {
 						$data['supports']['multiple'] = 'true' === $file_headers['supports_multiple'] ? true : false;
 					}
-					// If the SupportsAnchor header is set in the template, restrict this block anchor feature.
+					// If the SupportsAnchor header is set in the template, restrict this block
+					// anchor feature.
 					if ( ! empty( $file_headers['supports_anchor'] ) ) {
 						$data['supports']['anchor'] = 'true' === $file_headers['supports_anchor'] ? true : false;
 					}
@@ -110,6 +119,11 @@ add_action(
 
 /**
  * Callback to register blocks
+ *
+ * @param array  $block stores all the data from ACF.
+ * @param string $content content passed to block.
+ * @param bool   $is_preview checks if block is in preview mode.
+ * @param int    $post_id Post ID.
  */
 function timber_blocks_callback( $block, $content = '', $is_preview = false, $post_id = 0 ) {
 	// Set up the slug to be useful.
@@ -129,11 +143,14 @@ function timber_blocks_callback( $block, $content = '', $is_preview = false, $po
 
 /**
  * Generates array with paths and slugs
+ *
+ * @param string $slug File slug.
  */
 function timber_acf_path_render( $slug ) {
-	$directories = apply_filters( 'timber/acf-gutenberg-blocks-templates', ['views/blocks'] );
+	$directories = apply_filters( 'timber/acf-gutenberg-blocks-templates', [ 'views/blocks' ] );
 
-	foreach( $directories as $directory ) {
+	$ret = [];
+	foreach ( $directories as $directory ) {
 		$ret[] = $directory . "/{$slug}.twig";
 	}
 
