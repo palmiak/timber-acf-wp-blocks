@@ -11,7 +11,7 @@
     <exclude-pattern>*.twig</exclude-pattern>
 	<exclude-pattern>vendor/*</exclude-pattern>
 
-	<file>.</file>
+	<file>timber-acf-wp-blocks.php</file>
 
     <!-- Use colors in output. -->
     <arg name="colors"/>
