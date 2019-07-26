@@ -9,9 +9,9 @@
     <!-- Exclude folders and files from being checked. -->
     <exclude-pattern>*/tests/*</exclude-pattern>
     <exclude-pattern>*.twig</exclude-pattern>
+	<exclude-pattern>vendor/*</exclude-pattern>
 
-    <!-- If no files or directories are specified on the command line, check all relevant files. -->
-    <file>./lib</file>
+	<file>.</file>
 
     <!-- Use colors in output. -->
     <arg name="colors"/>
