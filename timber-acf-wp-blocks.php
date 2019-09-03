@@ -136,6 +136,9 @@ function timber_blocks_callback( $block, $content = '', $is_preview = false, $po
 	$context['is_preview'] = $is_preview;
 	$context['fields']     = get_fields();
 
+	$context = apply_filters( 'timber/acf-gutenberg-blocks-data/' . $slug, $context );
+	$context = apply_filters( 'timber/acf-gutenberg-blocks-data/' . $block['id'], $context );
+
 	$paths = timber_acf_path_render( $slug );
 
 	Timber::render( $paths, $context );
