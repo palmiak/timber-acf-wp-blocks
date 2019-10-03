@@ -69,7 +69,7 @@ add_action(
 					}
 
 					// Keywords exploding with quotes.
-					preg_match_all( '/"(?:\\\\.|[^\\\\"])*"|\S+/', $file_headers['keywords'], $keywords );
+					$keywords = str_getcsv( $file_headers['keywords'], ' ', '"' );
 
 					// Set up block data for registration.
 					$data = [
