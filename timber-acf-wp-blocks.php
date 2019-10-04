@@ -67,6 +67,10 @@ add_action(
 					if ( empty( $file_headers['category'] ) ) {
 						continue;
 					}
+
+					// Keywords exploding with quotes.
+					$keywords = str_getcsv( $file_headers['keywords'], ' ', '"' );
+
 					// Set up block data for registration.
 					$data = [
 						'name'            => $slug,
@@ -74,7 +78,7 @@ add_action(
 						'description'     => $file_headers['description'],
 						'category'        => $file_headers['category'],
 						'icon'            => $file_headers['icon'],
-						'keywords'        => explode( ' ', $file_headers['keywords'] ),
+						'keywords'        => $keywords,
 						'mode'            => $file_headers['mode'],
 						'render_callback' => 'timber_blocks_callback',
 						'enqueue_style'   => $file_headers['enqueue_style'],

@@ -6,7 +6,7 @@
   Description: Customer testimonial
   Category: formatting
   Icon: admin-comments
-  Keywords: testimonial quote
+  Keywords: testimonial quote "customer testimonial"
   Mode: edit
   Align: left
   PostTypes: page post
