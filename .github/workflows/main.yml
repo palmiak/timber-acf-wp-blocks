@@ -1,0 +1,17 @@
+name: create_plugin
+
+on:
+  push:
+    branches:
+    - master
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: "Create a folder"
+      run: mkdir timber-acf-wp-blocks
+    - name: "Move files"
+      run: mv !(timber-acf-wp-blocks) * timber-acf-wp-blocks
