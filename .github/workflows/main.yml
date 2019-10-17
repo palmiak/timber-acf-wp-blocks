@@ -12,7 +12,7 @@ jobs:
     
     steps:
     - name: "Move files"
-    - run: |
+      run: |
         mkdir timber-acf-wp-blocks
         shopt -s extglob
         mv !(timber-acf-wp-blocks) timber-acf-wp-blocks
