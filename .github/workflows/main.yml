@@ -11,9 +11,8 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-    - name: "Create a folder"
-      run: mkdir timber-acf-wp-blocks
     - name: "Move files"
       run: |
+        mkdir timber-acf-wp-blocks
         shopt -s extglob
         mv !(timber-acf-wp-blocks) timber-acf-wp-blocks
