@@ -14,4 +14,4 @@ jobs:
     - name: "Create a folder"
       run: mkdir timber-acf-wp-blocks
     - name: "Move files"
-      run: mv !(timber-acf-wp-blocks) * timber-acf-wp-blocks
+      run: mv * timber-acf-wp-blocks
