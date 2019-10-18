@@ -80,6 +80,7 @@ add_action(
 						'icon'            => $file_headers['icon'],
 						'keywords'        => $keywords,
 						'mode'            => $file_headers['mode'],
+						'align'           => $file_headers['align'],
 						'render_callback' => 'timber_blocks_callback',
 						'enqueue_style'   => $file_headers['enqueue_style'],
 						'enqueue_script'  => $file_headers['enqueue_script'],
