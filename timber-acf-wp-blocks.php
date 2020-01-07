@@ -147,7 +147,15 @@ function timber_blocks_callback( $block, $content = '', $is_preview = false, $po
 		'align' . $context['block']['align'],
 	];
 
-	$context['classes'] = implode( ' ', $classes );
+	$context['classes'] = implode(
+		' ',
+		array_filter(
+			$classes,
+			function ( $class ) {
+				return ! is_null( $class );
+			}
+		)
+	);
 
 	$context = apply_filters( 'timber/acf-gutenberg-blocks-data/' . $slug, $context );
 	$context = apply_filters( 'timber/acf-gutenberg-blocks-data/' . $block['id'], $context );
