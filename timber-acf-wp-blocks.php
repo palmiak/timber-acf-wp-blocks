@@ -35,8 +35,14 @@ add_action(
 			foreach ( $template_directory as $template ) {
 
 				if ( ! $template->isDot() && ! $template->isDir() ) {
+					$file_parts = pathinfo( $template->getFilename() );
+
+					if ( $file_parts['extension'] !== 'twig' ) {
+						continue;
+					}
+
 					// Strip the file extension to get the slug.
-					$slug = str_replace( '.twig', '', $template->getFilename() );
+					$slug = $file_parts['filename'];
 
 					// Get header info from the found template file(s).
 					$file_path    = locate_template( $dir . "/${slug}.twig" );
