@@ -22,7 +22,7 @@ add_action(
 	'acf/init',
 	function () {
 		// Get an array of directories containing blocks.
-		$directories = apply_filters( 'timber/acf-gutenberg-blocks-templates', [ 'views/blocks' ] );
+		$directories = timber_block_directory_getter();
 
 		// Check whether ACF exists before continuing.
 		foreach ( $directories as $dir ) {
@@ -35,8 +35,14 @@ add_action(
 			foreach ( $template_directory as $template ) {
 
 				if ( ! $template->isDot() && ! $template->isDir() ) {
+					$file_parts = pathinfo( $template->getFilename() );
+
+					if ( $file_parts['extension'] !== 'twig' ) {
+						continue;
+					}
+
 					// Strip the file extension to get the slug.
-					$slug = str_replace( '.twig', '', $template->getFilename() );
+					$slug = $file_parts['filename'];
 
 					// Get header info from the found template file(s).
 					$file_path    = locate_template( $dir . "/${slug}.twig" );
@@ -147,15 +153,7 @@ function timber_blocks_callback( $block, $content = '', $is_preview = false, $po
 		'align' . $context['block']['align'],
 	];
 
-	$context['classes'] = implode(
-		' ',
-		array_filter(
-			$classes,
-			function ( $class ) {
-				return ! is_null( $class );
-			}
-		)
-	);
+	$context['classes'] = implode( ' ', $classes );
 
 	$context = apply_filters( 'timber/acf-gutenberg-blocks-data/' . $slug, $context );
 	$context = apply_filters( 'timber/acf-gutenberg-blocks-data/' . $block['id'], $context );
@@ -171,7 +169,7 @@ function timber_blocks_callback( $block, $content = '', $is_preview = false, $po
  * @param string $slug File slug.
  */
 function timber_acf_path_render( $slug ) {
-	$directories = apply_filters( 'timber/acf-gutenberg-blocks-templates', [ 'views/blocks' ] );
+	$directories = timber_block_directory_getter();
 
 	$ret = [];
 	foreach ( $directories as $directory ) {
@@ -179,4 +177,44 @@ function timber_acf_path_render( $slug ) {
 	}
 
 	return $ret;
+}
+
+/**
+ * Generates the list of subfolders based on current directories
+ *
+ * @param array $directories File path array.
+ */
+function timber_blocks_subdirectories( $directories ) {
+	$ret = [];
+
+	foreach ( $directories as $base_directory ) {
+		$template_directory = new \RecursiveDirectoryIterator( \locate_template( $base_directory ), FilesystemIterator::KEY_AS_PATHNAME | FilesystemIterator::CURRENT_AS_SELF );
+
+		if ( $template_directory ) {
+			foreach ( $template_directory as $directory ) {
+				if ( $directory->isDir() && ! $directory->isDot() ) {
+					$ret[] = $base_directory . '/' . $directory->getFilename();
+				}
+			}
+		}
+	}
+
+	return $ret;
+}
+
+/**
+ * Universal function to handle getting folders and subfolders
+ */
+function timber_block_directory_getter() {
+	// Get an array of directories containing blocks.
+	$directories = apply_filters( 'timber/acf-gutenberg-blocks-templates', [ 'views/blocks' ] );
+
+	// Check subfolders.
+	$subdirectories = timber_blocks_subdirectories( $directories );
+
+	if ( ! empty( $subdirectories ) ) {
+		$directories = array_merge( $directories, $subdirectories );
+	}
+
+	return $directories;
 }
