@@ -15,20 +15,22 @@ This plugin is build with help of contributors: [roylodder](https://github.com/r
 Add twig templates to `views/blocks` which get and use ACF data. Each template requires a comment block with some data in it:
 ```twig
 {#
-  Title:
-  Description:
-  Category:
-  Icon:
-  Keywords:
-  Mode:
-  Align:
-  PostTypes:
-  SupportsAlign:
-  SupportsMode:
-  SupportsMultiple:
-  SupportsAnchor:
-  EnqueueStyle:
-  EnqueueScript:
-  EnqueueAssets:
+ Block Name: (required)
+ Description:
+ Category:
+ Icon:
+ Keywords: (comma-separated)
+ Post Types: 	(comma-separated)
+ Mode:
+ Align:
+ Enqueue Style:
+ Enqueue Script:
+ Enqueue Assets:
+ Supports Align: (comma-separated)
+ Supports Anchor: (true|false)
+ Supports Custom Class Name: (true|false)
+ Supports Mode: (true|false)
+ Supports Multiple: (true|false)
+ Supports Reusable: (true|false)
 #}
 ```
