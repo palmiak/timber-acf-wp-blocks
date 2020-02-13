@@ -48,7 +48,7 @@ add_action(
 					$file_path    = locate_template( $dir . "/${slug}.twig" );
 					$file_headers = get_file_data(
 						$file_path,
-						[
+						array(
 							'title'             => 'Title',
 							'description'       => 'Description',
 							'category'          => 'Category',
@@ -64,7 +64,7 @@ add_action(
 							'enqueue_style'     => 'EnqueueStyle',
 							'enqueue_script'    => 'EnqueueScript',
 							'enqueue_assets'    => 'EnqueueAssets',
-						]
+						)
 					);
 
 					if ( empty( $file_headers['title'] ) ) {
@@ -78,7 +78,7 @@ add_action(
 					$keywords = str_getcsv( $file_headers['keywords'], ' ', '"' );
 
 					// Set up block data for registration.
-					$data = [
+					$data = array(
 						'name'            => $slug,
 						'title'           => $file_headers['title'],
 						'description'     => $file_headers['description'],
@@ -91,7 +91,7 @@ add_action(
 						'enqueue_style'   => $file_headers['enqueue_style'],
 						'enqueue_script'  => $file_headers['enqueue_script'],
 						'enqueue_assets'  => $file_headers['enqueue_assets'],
-					];
+					);
 					// If the PostTypes header is set in the template, restrict this block
 					// to those types.
 					if ( ! empty( $file_headers['post_types'] ) ) {
@@ -100,9 +100,9 @@ add_action(
 					// If the SupportsAlign header is set in the template, restrict this block
 					// to those aligns.
 					if ( ! empty( $file_headers['supports_align'] ) ) {
-						$data['supports']['align'] = in_array( $file_headers['supports_align'], [ 'true', 'false' ], true ) ?
-						filter_var( $file_headers['supports_align'], FILTER_VALIDATE_BOOLEAN ) :
-						explode( ' ', $file_headers['supports_align'] );
+						$data['supports']['align'] = in_array( $file_headers['supports_align'], array( 'true', 'false' ), true ) ?
+							filter_var( $file_headers['supports_align'], FILTER_VALIDATE_BOOLEAN ) :
+							explode( ' ', $file_headers['supports_align'] );
 					}
 					// If the SupportsMode header is set in the template, restrict this block
 					// mode feature.
@@ -146,15 +146,16 @@ function timber_blocks_callback( $block, $content = '', $is_preview = false, $po
 	$context['slug']       = $slug;
 	$context['is_preview'] = $is_preview;
 	$context['fields']     = get_fields();
-	$classes               = [
+	$classes               = array(
 		$slug,
 		isset( $block['className'] ) ? $block['className'] : null,
 		$is_preview ? 'is-preview' : null,
 		'align' . $context['block']['align'],
-	];
+	);
 
 	$context['classes'] = implode( ' ', $classes );
 
+	$context = apply_filters( 'timber/acf-gutenberg-blocks-data', $context );
 	$context = apply_filters( 'timber/acf-gutenberg-blocks-data/' . $slug, $context );
 	$context = apply_filters( 'timber/acf-gutenberg-blocks-data/' . $block['id'], $context );
 
@@ -171,7 +172,7 @@ function timber_blocks_callback( $block, $content = '', $is_preview = false, $po
 function timber_acf_path_render( $slug ) {
 	$directories = timber_block_directory_getter();
 
-	$ret = [];
+	$ret = array();
 	foreach ( $directories as $directory ) {
 		$ret[] = $directory . "/{$slug}.twig";
 	}
@@ -185,7 +186,7 @@ function timber_acf_path_render( $slug ) {
  * @param array $directories File path array.
  */
 function timber_blocks_subdirectories( $directories ) {
-	$ret = [];
+	$ret = array();
 
 	foreach ( $directories as $base_directory ) {
 		$template_directory = new \RecursiveDirectoryIterator( \locate_template( $base_directory ), FilesystemIterator::KEY_AS_PATHNAME | FilesystemIterator::CURRENT_AS_SELF );
@@ -207,7 +208,7 @@ function timber_blocks_subdirectories( $directories ) {
  */
 function timber_block_directory_getter() {
 	// Get an array of directories containing blocks.
-	$directories = apply_filters( 'timber/acf-gutenberg-blocks-templates', [ 'views/blocks' ] );
+	$directories = apply_filters( 'timber/acf-gutenberg-blocks-templates', array( 'views/blocks' ) );
 
 	// Check subfolders.
 	$subdirectories = timber_blocks_subdirectories( $directories );
