@@ -9,7 +9,10 @@ Generate ACF Gutenberg blocks just by adding templates to your Timber theme. Thi
 [Read the complete documentation](https://palmiak.github.io/timber-acf-wp-blocks/#/)
 
 ## Contributors
-This plugin is build with help of contributors: [roylodder](https://github.com/roylodder)
+This plugin is build with help of contributors:
+- [roylodder](https://github.com/roylodder)
+- [BrentWMiller](https://github.com/BrentWMiller)
+- [Marcin Krzemiński](https://github.com/marcinkrzeminski)
 
 ## Creating blocks
 Add twig templates to `views/blocks` which get and use ACF data. Each template requires a comment block with some data in it:
