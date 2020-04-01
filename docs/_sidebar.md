@@ -3,5 +3,6 @@
 * [Parameters](parameters.md)
 * [Example](example.md)
 * [Filters](filters.md)
+* [Previews](previews.md)
 * [Read More](read-more.md)
 * [Contributors](contributors.md)
