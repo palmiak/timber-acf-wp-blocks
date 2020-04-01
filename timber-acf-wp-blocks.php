@@ -37,7 +37,7 @@ add_action(
 				if ( ! $template->isDot() && ! $template->isDir() ) {
 					$file_parts = pathinfo( $template->getFilename() );
 
-					if ( $file_parts['extension'] !== 'twig' ) {
+					if ( 'twig' !== $file_parts['extension'] ) {
 						continue;
 					}
 
@@ -159,7 +159,7 @@ function timber_blocks_callback( $block, $content = '', $is_preview = false, $po
 	$context = apply_filters( 'timber/acf-gutenberg-blocks-data/' . $slug, $context );
 	$context = apply_filters( 'timber/acf-gutenberg-blocks-data/' . $block['id'], $context );
 
-	$paths = timber_acf_path_render( $slug );
+	$paths = timber_acf_path_render( $slug, $is_preview );
 
 	Timber::render( $paths, $context );
 }
@@ -169,11 +169,15 @@ function timber_blocks_callback( $block, $content = '', $is_preview = false, $po
  *
  * @param string $slug File slug.
  */
-function timber_acf_path_render( $slug ) {
+function timber_acf_path_render( $slug, $is_preview ) {
 	$directories = timber_block_directory_getter();
 
 	$ret = array();
+
 	foreach ( $directories as $directory ) {
+		if ( $is_preview ) {
+			$ret[] = $directory . "/{$slug}-preview.twig";
+		}
 		$ret[] = $directory . "/{$slug}.twig";
 	}
 
