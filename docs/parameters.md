@@ -1,22 +1,22 @@
 # Block Parameters
 ```twig
 {#
- Block Name: (required)
+ Title: (required)
  Description:
  Category:
  Icon:
  Keywords: (comma-separated)
- Post Types: 	(comma-separated)
+ PostTypes: 	(comma-separated)
  Mode:
  Align:
- Enqueue Style:
- Enqueue Script:
- Enqueue Assets:
- Supports Align: (comma-separated)
- Supports Anchor: (true|false)
- Supports Custom Class Name: (true|false)
- Supports Mode: (true|false)
- Supports Multiple: (true|false)
- Supports Reusable: (true|false)
+ EnqueueStyle:
+ EnqueueScript:
+ EnqueueAssets: (function callback)
+ SupportsAlign: (comma-separated)
+ SupportsAnchor: (true|false)
+ SupportsCustomClassName: (true|false)
+ SupportsMode: (true|false)
+ SupportsMultiple: (true|false)
+ SupportsReusable: (true|false)
 #}
 ```
