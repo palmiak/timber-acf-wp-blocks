@@ -49,21 +49,23 @@ add_action(
 					$file_headers = get_file_data(
 						$file_path,
 						array(
-							'title'             => 'Title',
-							'description'       => 'Description',
-							'category'          => 'Category',
-							'icon'              => 'Icon',
-							'keywords'          => 'Keywords',
-							'mode'              => 'Mode',
-							'align'             => 'Align',
-							'post_types'        => 'PostTypes',
-							'supports_align'    => 'SupportsAlign',
-							'supports_mode'     => 'SupportsMode',
-							'supports_multiple' => 'SupportsMultiple',
-							'supports_anchor'   => 'SupportsAnchor',
-							'enqueue_style'     => 'EnqueueStyle',
-							'enqueue_script'    => 'EnqueueScript',
-							'enqueue_assets'    => 'EnqueueAssets',
+							'title'                      => 'Title',
+							'description'                => 'Description',
+							'category'                   => 'Category',
+							'icon'                       => 'Icon',
+							'keywords'                   => 'Keywords',
+							'mode'                       => 'Mode',
+							'align'                      => 'Align',
+							'post_types'                 => 'PostTypes',
+							'supports_align'             => 'SupportsAlign',
+							'supports_mode'              => 'SupportsMode',
+							'supports_multiple'          => 'SupportsMultiple',
+							'supports_anchor'            => 'SupportsAnchor',
+							'enqueue_style'              => 'EnqueueStyle',
+							'enqueue_script'             => 'EnqueueScript',
+							'enqueue_assets'             => 'EnqueueAssets',
+							'supports_custom_class_name' => 'SupportsCustomClassName',
+							'supports_reusable'          => 'SupportsReusable',
 						)
 					);
 
@@ -79,18 +81,18 @@ add_action(
 
 					// Set up block data for registration.
 					$data = array(
-						'name'            => $slug,
-						'title'           => $file_headers['title'],
-						'description'     => $file_headers['description'],
-						'category'        => $file_headers['category'],
-						'icon'            => $file_headers['icon'],
-						'keywords'        => $keywords,
-						'mode'            => $file_headers['mode'],
-						'align'           => $file_headers['align'],
-						'render_callback' => 'timber_blocks_callback',
-						'enqueue_style'   => $file_headers['enqueue_style'],
-						'enqueue_script'  => $file_headers['enqueue_script'],
-						'enqueue_assets'  => $file_headers['enqueue_assets'],
+						'name'                       => $slug,
+						'title'                      => $file_headers['title'],
+						'description'                => $file_headers['description'],
+						'category'                   => $file_headers['category'],
+						'icon'                       => $file_headers['icon'],
+						'keywords'                   => $keywords,
+						'mode'                       => $file_headers['mode'],
+						'align'                      => $file_headers['align'],
+						'render_callback'            => 'timber_blocks_callback',
+						'enqueue_assets'             => $file_headers['enqueue_assets'],
+						'supports_custom_class_name' => 'SupportsCustomClassName',
+						'supports_reusable'          => 'SupportsReusable',
 					);
 					// If the PostTypes header is set in the template, restrict this block
 					// to those types.
@@ -118,6 +120,38 @@ add_action(
 					// anchor feature.
 					if ( ! empty( $file_headers['supports_anchor'] ) ) {
 						$data['supports']['anchor'] = 'true' === $file_headers['supports_anchor'] ? true : false;
+					}
+
+					// If the SupportsCustomClassName is set to false hides the possibilty to
+					// add custom class name.
+					if ( ! empty( $file_headers['supports_custom_class_name'] ) ) {
+						$data['supports']['customClassName'] = 'true' === $file_headers['supports_custom_class_name'] ? true : false;
+					}
+
+					// If the SupportsReusable is set in the templates it adds a posibility to
+					// make this block reusable.
+					if ( ! empty( $file_headers['supports_reusable'] ) ) {
+						$data['supports']['reusable'] = 'true' === $file_headers['supports_reusable'] ? true : false;
+					}
+
+					// Gives a possibility to enqueue style. If not an absoulte URL than adds
+					// theme directory.
+					if ( ! empty( $file_headers['enqueue_style'] ) ) {
+						if ( ! filter_var( $file_headers['enqueue_style'], FILTER_VALIDATE_URL ) ) {
+							$data['enqueue_style'] = get_template_directory_uri() . '/' . $file_headers['enqueue_style'];
+						} else {
+							$data['enqueue_style'] = $file_headers['enqueue_style'];
+						}
+					}
+
+					// Gives a possibility to enqueue script. If not an absoulte URL than adds
+					// theme directory.
+					if ( ! empty( $file_headers['enqueue_script'] ) ) {
+						if ( ! filter_var( $file_headers['enqueue_script'], FILTER_VALIDATE_URL ) ) {
+							$data['enqueue_script'] = get_template_directory_uri() . '/' . $file_headers['enqueue_script'];
+						} else {
+							$data['enqueue_script'] = $file_headers['enqueue_script'];
+						}
 					}
 
 					// Register the block with ACF.
@@ -168,6 +202,7 @@ function timber_blocks_callback( $block, $content = '', $is_preview = false, $po
  * Generates array with paths and slugs
  *
  * @param string $slug File slug.
+ * @param bool   $is_preview Checks if preview.
  */
 function timber_acf_path_render( $slug, $is_preview ) {
 	$directories = timber_block_directory_getter();
