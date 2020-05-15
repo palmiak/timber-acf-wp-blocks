@@ -18,5 +18,6 @@
  SupportsMode: (true|false)
  SupportsMultiple: (true|false)
  SupportsReusable: (true|false)
+ Example: (JSON format)
 #}
 ```

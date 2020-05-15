@@ -66,6 +66,7 @@ add_action(
 							'enqueue_assets'             => 'EnqueueAssets',
 							'supports_custom_class_name' => 'SupportsCustomClassName',
 							'supports_reusable'          => 'SupportsReusable',
+							'example'                    => 'Example',
 						)
 					);
 
@@ -154,6 +155,19 @@ add_action(
 						}
 					}
 
+					// Suuport for "example".
+					if ( ! empty( $file_headers['example'] ) ) {
+						$json                       = json_decode( $file_headers['example'], true );
+						$example_data               = ( null !== $json ) ? $json : array();
+						$example_data['is_example'] = true;
+						$data['example']            = array(
+							'attributes' => array(
+								'mode' => 'preview',
+								'data' => $example_data,
+							),
+						);
+					}
+
 					// Register the block with ACF.
 					acf_register_block_type( $data );
 				}
@@ -189,11 +203,18 @@ function timber_blocks_callback( $block, $content = '', $is_preview = false, $po
 
 	$context['classes'] = implode( ' ', $classes );
 
+	$is_example = false;
+
+	if ( ! empty( $block['data']['is_example'] ) ) {
+		$is_example        = true;
+		$context['fields'] = $block['data'];
+	}
+
 	$context = apply_filters( 'timber/acf-gutenberg-blocks-data', $context );
 	$context = apply_filters( 'timber/acf-gutenberg-blocks-data/' . $slug, $context );
 	$context = apply_filters( 'timber/acf-gutenberg-blocks-data/' . $block['id'], $context );
 
-	$paths = timber_acf_path_render( $slug, $is_preview );
+	$paths = timber_acf_path_render( $slug, $is_preview, $is_example );
 
 	Timber::render( $paths, $context );
 }
@@ -203,13 +224,17 @@ function timber_blocks_callback( $block, $content = '', $is_preview = false, $po
  *
  * @param string $slug File slug.
  * @param bool   $is_preview Checks if preview.
+ * @param bool   $is_example Checks if example.
  */
-function timber_acf_path_render( $slug, $is_preview ) {
+function timber_acf_path_render( $slug, $is_preview, $is_example ) {
 	$directories = timber_block_directory_getter();
 
 	$ret = array();
 
 	foreach ( $directories as $directory ) {
+		if ( $is_example ) {
+			$ret[] = $directory . "/{$slug}-example.twig";
+		}
 		if ( $is_preview ) {
 			$ret[] = $directory . "/{$slug}-preview.twig";
 		}

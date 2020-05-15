@@ -18,22 +18,30 @@ This plugin is build with help of contributors:
 Add twig templates to `views/blocks` which get and use ACF data. Each template requires a comment block with some data in it:
 ```twig
 {#
- Block Name: (required)
- Description:
- Category:
- Icon:
- Keywords: (comma-separated)
- Post Types: 	(comma-separated)
- Mode:
- Align:
- Enqueue Style:
- Enqueue Script:
- Enqueue Assets:
- Supports Align: (comma-separated)
- Supports Anchor: (true|false)
- Supports Custom Class Name: (true|false)
- Supports Mode: (true|false)
- Supports Multiple: (true|false)
- Supports Reusable: (true|false)
+  Title: Testimonial
+  Description: Customer testimonial
+  Category: formatting
+  Icon: admin-comments
+  Keywords: testimonial quote "customer testimonial"
+  Mode: edit
+  Align: left
+  PostTypes: page post
+  SupportsAlign: left right
+  SupportsMode: false
+  SupportsMultiple: false
 #}
+
+<blockquote data-{{ block.id }}>
+    <p>{{ fields.testimonial }}</p>
+    <cite>
+      <span>{{ fields.author }}</span>
+    </cite>
+</blockquote>
+
+<style type="text/css">
+  [data-{{ block.id }}] {
+    background: {{ fields.background_color }};
+    color: {{ fields.text_color }};
+  }
+</style>
 ```

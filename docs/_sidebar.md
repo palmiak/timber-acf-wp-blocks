@@ -4,5 +4,6 @@
 * [Example](example.md)
 * [Filters](filters.md)
 * [Previews](previews.md)
+* [Using Example](using-example.md)
 * [Read More](read-more.md)
 * [Contributors](contributors.md)
