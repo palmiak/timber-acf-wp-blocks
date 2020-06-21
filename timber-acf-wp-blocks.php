@@ -67,6 +67,7 @@ add_action(
 							'supports_custom_class_name' => 'SupportsCustomClassName',
 							'supports_reusable'          => 'SupportsReusable',
 							'example'                    => 'Example',
+							'supports_jsx'               => 'SupportsJSX',
 						)
 					);
 
@@ -154,8 +155,12 @@ add_action(
 							$data['enqueue_script'] = $file_headers['enqueue_script'];
 						}
 					}
+					// Support for experimantal JSX.
+					if ( ! empty( $file_headers['supports_jsx'] ) ) {
+						$data['supports']['__experimental_jsx'] = 'true' === $file_headers['supports_jsx'] ? true : false;
+					}
 
-					// Suuport for "example".
+					// Support for "example".
 					if ( ! empty( $file_headers['example'] ) ) {
 						$json                       = json_decode( $file_headers['example'], true );
 						$example_data               = ( null !== $json ) ? $json : array();

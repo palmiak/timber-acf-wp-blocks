@@ -18,6 +18,7 @@
  SupportsMode: (true|false)
  SupportsMultiple: (true|false)
  SupportsReusable: (true|false)
+ SupportsJSX: (true|false)
  Example: (JSON format)
 #}
 ```
