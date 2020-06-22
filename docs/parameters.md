@@ -6,7 +6,7 @@
  Category:
  Icon:
  Keywords: (comma-separated)
- PostTypes: 	(comma-separated)
+ PostTypes: (space-separated)
  Mode:
  Align:
  EnqueueStyle:
