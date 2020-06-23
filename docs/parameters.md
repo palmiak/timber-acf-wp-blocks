@@ -5,14 +5,14 @@
  Description:
  Category:
  Icon:
- Keywords: (comma-separated)
+ Keywords: (space-separated)
  PostTypes: (space-separated)
  Mode:
  Align:
  EnqueueStyle:
  EnqueueScript:
  EnqueueAssets: (function callback)
- SupportsAlign: (comma-separated)
+ SupportsAlign: (space-separated)
  SupportsAnchor: (true|false)
  SupportsCustomClassName: (true|false)
  SupportsMode: (true|false)
