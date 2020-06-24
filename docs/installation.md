@@ -13,4 +13,8 @@ composer require "palmiak/timber-acf-wp-blocks"
 
 Next you can create your blocks in your theme in **views/blocks** folder (you can change it with a filter).
 
+> **Note**: filenames should only contain lowercase alphanumeric characters and dashes, and must begin with a letter.
+
+
+
 When you have your blocks ready the only thing left it to create a New group in ACF and select your block in **Show this field group if** selector.
