@@ -203,7 +203,7 @@ function timber_blocks_callback( $block, $content = '', $is_preview = false, $po
 		array( $slug ),
 		isset( $block['className'] ) ? array( $block['className'] ) : array(),
 		$is_preview ? array( 'is-preview' ) : array(),
-		array( 'align' . $context['block']['align'] ),
+		array( 'align' . $context['block']['align'] )
 	);
 
 	$context['classes'] = implode( ' ', $classes );
