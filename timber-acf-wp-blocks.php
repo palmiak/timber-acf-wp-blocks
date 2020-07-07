@@ -27,11 +27,17 @@ add_action(
 		// Check whether ACF exists before continuing.
 		foreach ( $directories as $dir ) {
 			// Sanity check whether the directory we're iterating over exists first.
-			if ( ! file_exists( \locate_template( $dir ) ) ) {
+			$location = locate_template( $dir );
+
+			if ( '' === $location ) {
+				$location = $dir;
+			}
+
+			if ( ! file_exists( $location ) ) {
 				return;
 			}
 			// Iterate over the directories provided and look for templates.
-			$template_directory = new \DirectoryIterator( \locate_template( $dir ) );
+			$template_directory = new \DirectoryIterator( $location );
 			foreach ( $template_directory as $template ) {
 
 				if ( ! $template->isDot() && ! $template->isDir() ) {
@@ -44,8 +50,13 @@ add_action(
 					// Strip the file extension to get the slug.
 					$slug = $file_parts['filename'];
 
+					$location = locate_template( $dir . "/${slug}.twig" );
+
+					if ( '' === $location ) {
+						$location = $dir . "/${slug}.twig";
+					}
 					// Get header info from the found template file(s).
-					$file_path    = locate_template( $dir . "/${slug}.twig" );
+					$file_path    = $location;
 					$file_headers = get_file_data(
 						$file_path,
 						array(
@@ -258,7 +269,13 @@ function timber_blocks_subdirectories( $directories ) {
 	$ret = array();
 
 	foreach ( $directories as $base_directory ) {
-		$template_directory = new \RecursiveDirectoryIterator( \locate_template( $base_directory ), \FilesystemIterator::KEY_AS_PATHNAME | \FilesystemIterator::CURRENT_AS_SELF );
+		$location = locate_template( $base_directory );
+
+		if ( '' === $location ) {
+			$location = $base_directory;
+		}
+
+		$template_directory = new \RecursiveDirectoryIterator( $location, \FilesystemIterator::KEY_AS_PATHNAME | \FilesystemIterator::CURRENT_AS_SELF );
 
 		if ( $template_directory ) {
 			foreach ( $template_directory as $directory ) {
