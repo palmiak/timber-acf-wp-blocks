@@ -275,6 +275,10 @@ function timber_blocks_subdirectories( $directories ) {
 			$location = $base_directory;
 		}
 
+		if ( ! file_exists( $location ) ) {
+			continue;
+		}
+
 		$template_directory = new \RecursiveDirectoryIterator( $location, \FilesystemIterator::KEY_AS_PATHNAME | \FilesystemIterator::CURRENT_AS_SELF );
 
 		if ( $template_directory ) {
