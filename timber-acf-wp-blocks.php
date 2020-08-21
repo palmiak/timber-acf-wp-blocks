@@ -5,6 +5,11 @@
  * @package timber-acf-wp-blocks
  **/
 
+use DirectoryIterator;
+use FilesystemIterator;
+use RecursiveDirectoryIterator;
+use Timber\Timber;
+
 if ( ! function_exists( 'acf_register_block' ) ) {
 	return;
 }
@@ -31,7 +36,7 @@ add_action(
 				return;
 			}
 			// Iterate over the directories provided and look for templates.
-			$template_directory = new \DirectoryIterator( \locate_template( $dir ) );
+			$template_directory = new DirectoryIterator( \locate_template( $dir ) );
 			foreach ( $template_directory as $template ) {
 
 				if ( ! $template->isDot() && ! $template->isDir() ) {
@@ -191,7 +196,7 @@ add_action(
  */
 function timber_blocks_callback( $block, $content = '', $is_preview = false, $post_id = 0 ) {
 	// Set up the slug to be useful.
-	$context = \Timber::get_context();
+	$context = Timber::get_context();
 	$slug    = str_replace( 'acf/', '', $block['name'] );
 
 	$context['block']      = $block;
@@ -221,7 +226,7 @@ function timber_blocks_callback( $block, $content = '', $is_preview = false, $po
 
 	$paths = timber_acf_path_render( $slug, $is_preview, $is_example );
 
-	\Timber::render( $paths, $context );
+	Timber::render( $paths, $context );
 }
 
 /**
@@ -258,7 +263,7 @@ function timber_blocks_subdirectories( $directories ) {
 	$ret = array();
 
 	foreach ( $directories as $base_directory ) {
-		$template_directory = new \RecursiveDirectoryIterator( \locate_template( $base_directory ), \FilesystemIterator::KEY_AS_PATHNAME | \FilesystemIterator::CURRENT_AS_SELF );
+		$template_directory = new RecursiveDirectoryIterator( \locate_template( $base_directory ), FilesystemIterator::KEY_AS_PATHNAME | FilesystemIterator::CURRENT_AS_SELF );
 
 		if ( $template_directory ) {
 			foreach ( $template_directory as $directory ) {
