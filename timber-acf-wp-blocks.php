@@ -243,12 +243,15 @@ function timber_acf_path_render($slug, $is_preview, $is_example) {
 
 		$ret = [];
 
+		$exampleIdentifier = apply_filters('timber/acf-gutenberg-blocks-example-identifier', '-example');
+		$previewIdentifier = apply_filters('timber/acf-gutenberg-blocks-preview-identifier', '-preview');
+		
 		foreach ($directories as $directory) {
 				if ($is_example) {
-						$ret[] = $directory . "/{$slug}-example.twig";
+						$ret[] = $directory . "/{$slug}{$exampleIdentifier}.twig";
 				}
 				if ($is_preview) {
-						$ret[] = $directory . "/{$slug}-preview.twig";
+						$ret[] = $directory . "/{$slug}{$previewIdentifier}.twig";
 				}
 				$ret[] = $directory . "/{$slug}.twig";
 		}
