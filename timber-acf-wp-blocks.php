@@ -236,22 +236,25 @@ function timber_blocks_callback( $block, $content = '', $is_preview = false, $po
  * @param bool   $is_preview Checks if preview.
  * @param bool   $is_example Checks if example.
  */
-function timber_acf_path_render( $slug, $is_preview, $is_example ) {
-	$directories = timber_block_directory_getter();
+function timber_acf_path_render($slug, $is_preview, $is_example) {
+		$directories = timber_block_directory_getter();
 
-	$ret = array();
+		$ret = [];
 
-	foreach ( $directories as $directory ) {
-		if ( $is_example ) {
-			$ret[] = $directory . "/{$slug}-example.twig";
+		$exampleIdentifier = apply_filters('timber/acf-gutenberg-blocks-example-identifier', '-example');
+		$previewIdentifier = apply_filters('timber/acf-gutenberg-blocks-preview-identifier', '-preview');
+
+		foreach ($directories as $directory) {
+				if ($is_example) {
+						$ret[] = $directory . "/{$slug}{$exampleIdentifier}.twig";
+				}
+				if ($is_preview) {
+						$ret[] = $directory . "/{$slug}{$previewIdentifier}.twig";
+				}
+				$ret[] = $directory . "/{$slug}.twig";
 		}
-		if ( $is_preview ) {
-			$ret[] = $directory . "/{$slug}-preview.twig";
-		}
-		$ret[] = $directory . "/{$slug}.twig";
-	}
 
-	return $ret;
+		return $ret;
 }
 
 /**
