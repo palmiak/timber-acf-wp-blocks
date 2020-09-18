@@ -5,9 +5,6 @@
  * @package timber-acf-wp-blocks
  **/
 
-use DirectoryIterator;
-use FilesystemIterator;
-use RecursiveDirectoryIterator;
 use Timber\Timber;
 
 if ( ! function_exists( 'acf_register_block' ) ) {
@@ -162,7 +159,9 @@ add_action(
 					}
 					// Support for experimantal JSX.
 					if ( ! empty( $file_headers['supports_jsx'] ) ) {
+						// Leaving the experimaental part for 2 versions.
 						$data['supports']['__experimental_jsx'] = 'true' === $file_headers['supports_jsx'] ? true : false;
+						$data['supports']['jsx']                = 'true' === $file_headers['supports_jsx'] ? true : false;
 					}
 
 					// Support for "example".
@@ -241,12 +240,26 @@ function timber_acf_path_render( $slug, $is_preview, $is_example ) {
 
 	$ret = array();
 
+	/**
+	 * Filters the name of suffix for example file.
+	 *
+	 * @since 1.12
+	 */
+	$example_identifier = apply_filters( 'timber/acf-gutenberg-blocks-example-identifier', '-example' );
+
+	/**
+	 * Filters the name of suffix for preview file.
+	 *
+	 * @since 1.12
+	 */
+	$preview_identifier = apply_filters( 'timber/acf-gutenberg-blocks-preview-identifier', '-preview' );
+
 	foreach ( $directories as $directory ) {
 		if ( $is_example ) {
-			$ret[] = $directory . "/{$slug}-example.twig";
+			$ret[] = $directory . "/{$slug}{$example_identifier}.twig";
 		}
 		if ( $is_preview ) {
-			$ret[] = $directory . "/{$slug}-preview.twig";
+			$ret[] = $directory . "/{$slug}{$preview_identifier}.twig";
 		}
 		$ret[] = $directory . "/{$slug}.twig";
 	}

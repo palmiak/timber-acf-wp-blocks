@@ -14,7 +14,7 @@
   SupportsMultiple: false
 #}
 
-<blockquote class="{{ block.classes }}" data-{{ block.id }}>
+<blockquote class="{{ classes }}" data-{{ block.id }}>
     <p>{{ fields.testimonial }}</p>
     <cite>
       <span>{{ fields.author }}</span>

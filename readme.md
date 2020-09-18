@@ -13,6 +13,9 @@ This plugin is build with help of contributors:
 - [roylodder](https://github.com/roylodder)
 - [BrentWMiller](https://github.com/BrentWMiller)
 - [Marcin Krzemiński](https://github.com/marcinkrzeminski)
+- [Kuba Mikita](https://github.com/Kubitomakita)
+- [LandWire](https://github.com/landwire)
+
 
 ## Creating blocks
 Add twig templates to `views/blocks` which get and use ACF data. Each template requires a comment block with some data in it:

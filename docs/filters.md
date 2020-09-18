@@ -31,3 +31,29 @@ add_filter( 'timber/acf-gutenberg-blocks-data/block_5d6ed05b6b931', function( $c
 	return $context;
 } );
 ```
+
+`timber/acf-gutenberg-blocks-example-identifier` - filters the example file sufix. default `-example`
+Since version 1.12
+
+```php
+<?php
+add_filter( 'timber/acf-gutenberg-blocks-example-identifier', function( $sufix ){
+
+	return '-expl';
+} );
+```
+
+So the example file would be called `slug-exmpl.twig`.
+
+`timber/acf-gutenberg-blocks-preview-identifier` - filters the preview file sufix. default `-preview`
+Since version 1.12
+
+```php
+<?php
+add_filter( 'timber/acf-gutenberg-blocks-preview-identifier', function( $sufix ){
+
+	return '-prev';
+} );
+```
+
+So the preview file would be called `slug-prev.twig`.
