@@ -70,6 +70,7 @@ add_action(
 							'supports_reusable'          => 'SupportsReusable',
 							'example'                    => 'Example',
 							'supports_jsx'               => 'SupportsJSX',
+							'parent'                     => 'Parent',
 						)
 					);
 
@@ -175,6 +176,11 @@ add_action(
 								'data' => $example_data,
 							),
 						);
+					}
+
+					// Support for "parent".
+					if ( ! empty( $file_headers['parent'] ) ) {
+						$data['parent'] = str_getcsv( $file_headers['parent'], ' ', '"' );
 					}
 
 					// Register the block with ACF.
