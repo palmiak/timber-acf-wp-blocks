@@ -71,6 +71,7 @@ add_action(
 							'example'                    => 'Example',
 							'supports_jsx'               => 'SupportsJSX',
 							'parent'                     => 'Parent',
+							'default_data'               => 'DefaultData',
 						)
 					);
 
@@ -98,7 +99,12 @@ add_action(
 						'enqueue_assets'             => $file_headers['enqueue_assets'],
 						'supports_custom_class_name' => 'SupportsCustomClassName',
 						'supports_reusable'          => 'SupportsReusable',
+						'default_data'               => $file_headers['default_data'],
 					);
+
+					// Removes empty defaults.
+					$data = array_filter( $data );
+
 					// If the PostTypes header is set in the template, restrict this block
 					// to those types.
 					if ( ! empty( $file_headers['post_types'] ) ) {
@@ -182,6 +188,9 @@ add_action(
 					if ( ! empty( $file_headers['parent'] ) ) {
 						$data['parent'] = str_getcsv( $file_headers['parent'], ' ', '"' );
 					}
+
+					// Merges the default options.
+					$data = timber_block_default_data( $data );
 
 					// Register the block with ACF.
 					acf_register_block_type( $data );
@@ -311,4 +320,31 @@ function timber_block_directory_getter() {
 	}
 
 	return $directories;
+}
+
+/**
+ * Default options setter.
+ *
+ * @param [array] $data - header set data.
+ * @return [array]
+ */
+function timber_block_default_data( $data ) {
+	$default_data = apply_filters( 'timber/acf-gutenberg-blocks-default-data', array() );
+	$data_array   = array();
+
+	if ( ! empty( $data['default_data'] ) ) {
+		$default_data_key = $data['default_data'];
+	}
+
+	if ( isset( $default_data_key ) && ! empty( $default_data[ $default_data_key ] ) ) {
+		$data_array = $default_data[ $default_data_key ];
+	} elseif ( ! empty( $default_data['default'] ) ) {
+		$data_array = $default_data['default'];
+	}
+
+	if ( is_array( $data_array ) ) {
+		$data = array_merge( $data_array, $data );
+	}
+
+	return $data;
 }

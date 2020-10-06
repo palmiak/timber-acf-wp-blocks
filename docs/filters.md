@@ -57,3 +57,24 @@ add_filter( 'timber/acf-gutenberg-blocks-preview-identifier', function( $sufix )
 ```
 
 So the preview file would be called `slug-prev.twig`.
+
+`timber/acf-gutenberg-blocks-default-data` - sets the default block parameters
+Since version 1.13
+
+```php
+<?php
+add_filter( 'timber/acf-gutenberg-blocks-default-data', function( $data ){
+    $data['default'] = array(
+        'post_type' => 'post',
+    );
+    $data['pages'] = array(
+        'post_type' => 'page',
+    );
+	return $data;
+} );
+```
+
+With this filter added - by default each block will have **post** as a post type, but if we'll add:
+`DefaultData: page` to the block - it will set post type to **page**.
+
+Of course setting a `PostType` in a block will override the default-data settings.

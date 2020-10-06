@@ -21,5 +21,6 @@
  SupportsJSX: (true|false)
  Example: (JSON format)
  Parent: (space-separated)
+ DefaultData:
 #}
 ```
