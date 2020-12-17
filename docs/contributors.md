@@ -5,5 +5,6 @@ This plugin is build with help of contributors:
 - [Marcin Krzemiński](https://github.com/marcinkrzeminski)
 - [Kuba Mikita](https://github.com/Kubitomakita)
 - [LandWire](https://github.com/landwire)
+- [Viktor Szépe](https://github.com/szepeviktor)
 
 Thanks everyone :)

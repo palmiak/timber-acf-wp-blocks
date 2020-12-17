@@ -8,7 +8,7 @@
 use Timber\Timber;
 
 if ( function_exists( 'add_action' ) && function_exists( 'acf_register_block' ) ) {
-	add_action(	'acf/init', 'timber_block_init', 10, 0 );
+	add_action( 'acf/init', 'timber_block_init', 10, 0 );
 }
 
 /**
@@ -199,15 +199,21 @@ function timber_block_init() {
  * @param int    $post_id Post ID.
  */
 function timber_blocks_callback( $block, $content = '', $is_preview = false, $post_id = 0 ) {
+	// Context compatibility.
+	if ( method_exists( 'Timber', 'context' ) ) {
+		$context = Timber::context();
+	} else {
+		$context = Timber::get_context();
+	}
+
 	// Set up the slug to be useful.
-	$context = Timber::get_context();
-	$slug    = str_replace( 'acf/', '', $block['name'] );
+	$slug = str_replace( 'acf/', '', $block['name'] );
 
 	$context['block']      = $block;
 	$context['post_id']    = $post_id;
 	$context['slug']       = $slug;
 	$context['is_preview'] = $is_preview;
-	$context['fields']     = get_fields();
+	$context['fields']     = \get_fields();
 	$classes               = array_merge(
 		array( $slug ),
 		isset( $block['className'] ) ? array( $block['className'] ) : array(),
@@ -281,6 +287,11 @@ function timber_blocks_subdirectories( $directories ) {
 	$ret = array();
 
 	foreach ( $directories as $base_directory ) {
+		// Check if the folder exist.
+		if ( ! file_exists( \locate_template( $base_directory ) ) ) {
+			continue;
+		}
+
 		$template_directory = new RecursiveDirectoryIterator( \locate_template( $base_directory ), FilesystemIterator::KEY_AS_PATHNAME | FilesystemIterator::CURRENT_AS_SELF );
 
 		if ( $template_directory ) {

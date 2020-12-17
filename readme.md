@@ -15,6 +15,7 @@ This plugin is build with help of contributors:
 - [Marcin Krzemiński](https://github.com/marcinkrzeminski)
 - [Kuba Mikita](https://github.com/Kubitomakita)
 - [LandWire](https://github.com/landwire)
+- [Viktor Szépe](https://github.com/szepeviktor)
 
 
 ## Creating blocks
@@ -48,3 +49,6 @@ Add twig templates to `views/blocks` which get and use ACF data. Each template r
   }
 </style>
 ```
+
+## Timber 2.0
+**Timber ACF WP Blocks** is fully compatible with both **Timber 1.x** and **Timber 2.x** versions.

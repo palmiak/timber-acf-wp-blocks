@@ -3,7 +3,7 @@
 {#
  Title: (required)
  Description:
- Category:
+ Category: (required)
  Icon:
  Keywords: (space-separated)
  PostTypes: (space-separated)
