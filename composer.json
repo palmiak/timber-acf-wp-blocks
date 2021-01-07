@@ -3,8 +3,10 @@
     "description": "Create Gutenberg blocks from Twig templates and ACF fields.",
     "keywords": ["wordpress", "gutenberg", "advanced custom fields"],
     "require": {
-        "php": ">=5.6"
+        "php": ">=5.6",
+        "composer/installers": "^1.9"
     },
+    "type": "wordpress-muplugin",
     "license": "MIT",
     "authors": [
         {
