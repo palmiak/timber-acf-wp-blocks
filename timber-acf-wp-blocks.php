@@ -24,7 +24,12 @@ if ( ! class_exists( 'Timber_Acf_Wp_Blocks' ) ) {
 		 * Constructor
 		 */
 		public function __construct() {
-			add_action( 'acf/init', array( __CLASS__, 'timber_block_init' ), 10, 0 );
+			if ( is_callable( 'add_action' )
+				&& is_callable( 'acf_register_block_type' )
+				&& class_exists( 'Timber' )
+				) {
+				add_action( 'acf/init', array( __CLASS__, 'timber_block_init' ), 10, 0 );
+			}
 		}
 
 
@@ -382,10 +387,4 @@ if ( ! class_exists( 'Timber_Acf_Wp_Blocks' ) ) {
 	}
 }
 
-
-if ( function_exists( 'add_action ' )  // Checks for WordPress.
-	&& function_exists( 'acf_register_block' ) // Checks for ACF.
-	&& class_exists( 'Timber\Timber' )  // Checks for Timber.
-	) {
-	new Timber_Acf_Wp_Blocks();
-}
+new Timber_Acf_Wp_Blocks();
