@@ -1,4 +1,5 @@
 # Block Parameters
+When creating blocks, you can include any of the following parameters.
 ```twig
 {#
  Title: (required)

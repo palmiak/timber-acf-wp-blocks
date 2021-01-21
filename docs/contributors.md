@@ -6,5 +6,6 @@ This plugin is build with help of contributors:
 - [Kuba Mikita](https://github.com/Kubitomakita)
 - [LandWire](https://github.com/landwire)
 - [Viktor Szépe](https://github.com/szepeviktor)
+- [James Amner](https://github.com/jdamner)
 
 Thanks everyone :)

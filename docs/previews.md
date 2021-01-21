@@ -2,7 +2,7 @@
 
 If your preview file differs a lot from the normal block you can create a separate preview file.
 
-To do this you need to first create a normal block - let's call it `block.twig`:
+To do this you need to first create a normal block - let's call it `testimonial.twig`:
 ```twig
 {#
   Title: Testimonial
@@ -27,8 +27,8 @@ To do this you need to first create a normal block - let's call it `block.twig`:
   }
 </style>
 ```
-
-next create a `block-preview.twig` file without comments at the top:
+## Creating the preview output
+Next create a `testimonial-preview.twig` file without comments at the top:
 ```twig
 <p>This is a preview</p>
 <blockquote data-{{ block.id }}>
@@ -46,3 +46,4 @@ next create a `block-preview.twig` file without comments at the top:
   }
 </style>
 ```
+The suffix for this **preview** file can be changed using a [filter]('filters.md')

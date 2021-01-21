@@ -2,7 +2,8 @@
 From ACF 5.8.11 you can use **Example** to set example data for block previews. You can read more about this:
 - [https://developer.wordpress.org/block-editor/developers/block-api/block-registration/](https://developer.wordpress.org/block-editor/developers/block-api/block-registration/)
 
-To do this in **Timber ACF Blocks** you need to create your block like this:
+To do this in **Timber ACF Blocks** you need to create your block with a set of example parameters in JSON format.
+In `testimonial.twig`:
 ```twig
 {#
   Title: Testimonial
@@ -22,12 +23,12 @@ To do this in **Timber ACF Blocks** you need to create your block like this:
 </blockquote>
 
 ```
-In **Example** we only pass the fields and their values as a valid JSON.
+When showing an **example** we only pass the fields and their values as a valid JSON.
 
 ## Using static HTML as preview
-There are cases when we would like to use a static HTML as example. To do this create a file called `your-block-name-example.twig`. So if your block is called `testimonial.twig` than the example would be called `testimonial-example.twig`.
+There are cases when we would like to use a static HTML as example instead of a generated example. To do this create a file called `{slug}-example.twig`. So if your block is called `testimonial.twig` than the example would be called `testimonial-example.twig`. The suffix for this **example** file can be changed using a [filter]('filters.md')
 
-This file would like this:
+In `testimonial-example.twig`:
 ```twig
 <blockquote>
     <p>Testimonial</p>
