@@ -16,7 +16,7 @@ or if want to install it as a Plugin run:
 composer require "palmiak/timber-acf-wp-blocks-plugin"
 ```
 
-Next you can create your blocks in your theme in **views/blocks** folder, or you can change your blocks directory with a [filter]('filters.md').
+Next you can create your blocks in your theme in **views/blocks** folder, or you can change your blocks directory with a [filter](filters.md).
 
 > **Note**: filenames should only contain lowercase alphanumeric characters and dashes, and must begin with a letter.
 
