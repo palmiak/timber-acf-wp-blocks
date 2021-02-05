@@ -42,7 +42,7 @@ add_filter( 'timber/acf-gutenberg-blocks-data/block_5d6ed05b6b931', function( $c
 ```
 
 ## Customising the preview/example file suffix
-You can change the [example]('using-example.md') or [preview]('previews.md') file's suffix. 
+You can change the [example](using-example.md) or [preview](previews.md) file's suffix. 
 
 ### Example
 `timber/acf-gutenberg-blocks-example-identifier` - filters the example file sufix. default `-example`
