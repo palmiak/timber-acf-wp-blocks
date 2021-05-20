@@ -18,6 +18,14 @@ if ( ! class_exists( 'Timber_Acf_Wp_Blocks' ) ) {
 				&& class_exists( 'Timber' )
 				) {
 				add_action( 'acf/init', array( __CLASS__, 'timber_block_init' ), 10, 0 );
+			} elseif (is_callable( 'add_action') ) {
+				add_action(
+					'admin_notices',
+					function() {
+						echo '<div class="error"><p>Timber ACF WP Blocks requires Timber and ACF.';
+						echo 'Check the plugins are installed and activated.</p></div>';
+					}
+				);
 			}
 		}
 
@@ -376,23 +384,11 @@ if ( ! class_exists( 'Timber_Acf_Wp_Blocks' ) ) {
 	}
 }
 
-/**
- * Validates Timber is available before instatiating the class.
- */
-if (! class_exists( 'Timber' )) {
-	if ( is_callable( 'add_action' ) ) {
-		add_action(
-			'admin_notices', 
-			function() {
-				echo '<div class="error"><p>Timber not activated.</p></div>';
-			}
-		);
-	}
-} elseif ( is_callable( 'add_action' ) ) {
-    add_action(
-    	'after_setup_theme',
-    	function() {
-      		new Timber_Acf_Wp_Blocks();
-    	}
+if ( is_callable( 'add_action' ) ) {
+	add_action(
+		'after_setup_theme',
+		function() {
+			new Timber_Acf_Wp_Blocks();
+		}
 	);
 }
