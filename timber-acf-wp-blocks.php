@@ -387,4 +387,15 @@ if ( ! class_exists( 'Timber_Acf_Wp_Blocks' ) ) {
 	}
 }
 
-new Timber_Acf_Wp_Blocks();
+/**
+ * Validates Timber is available before instatiating the class.
+ */
+if (! class_exists( 'Timber' )) {
+	if ( is_callable( 'add_action' ) ) {
+		add_action( 'admin_notices', function() {
+			echo '<div class="error"><p>Timber not activated.</p></div>';
+		} );
+	} 
+} else {
+	new Timber_Acf_Wp_Blocks();
+}
