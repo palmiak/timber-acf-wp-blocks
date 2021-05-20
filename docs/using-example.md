@@ -26,7 +26,7 @@ In `testimonial.twig`:
 When showing an **example** we only pass the fields and their values as a valid JSON.
 
 ## Using static HTML as preview
-There are cases when we would like to use a static HTML as example instead of a generated example. To do this create a file called `{slug}-example.twig`. So if your block is called `testimonial.twig` than the example would be called `testimonial-example.twig`. The suffix for this **example** file can be changed using a [filter]('filters.md')
+There are cases when we would like to use a static HTML as example instead of a generated example. To do this create a file called `{slug}-example.twig`. So if your block is called `testimonial.twig` than the example would be called `testimonial-example.twig`. The suffix for this **example** file can be changed using a [filter](filters.md)
 
 In `testimonial-example.twig`:
 ```twig

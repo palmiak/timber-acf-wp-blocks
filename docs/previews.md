@@ -46,4 +46,4 @@ Next create a `testimonial-preview.twig` file without comments at the top:
   }
 </style>
 ```
-The suffix for this **preview** file can be changed using a [filter]('filters.md')
+The suffix for this **preview** file can be changed using a [filter](filters.md)
