@@ -19,6 +19,7 @@ When creating blocks, you can include any of the following parameters.
  SupportsMode: (true|false)
  SupportsMultiple: (true|false)
  SupportsReusable: (true|false)
+ SupportsFullHeight: (true:false)
  SupportsJSX: (true|false)
  Example: (JSON format)
  Parent: (space-separated)

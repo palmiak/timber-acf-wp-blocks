@@ -18,12 +18,12 @@ if ( ! class_exists( 'Timber_Acf_Wp_Blocks' ) ) {
 				&& class_exists( 'Timber' )
 				) {
 				add_action( 'acf/init', array( __CLASS__, 'timber_block_init' ), 10, 0 );
-			} elseif (is_callable( 'add_action') ) {
+			} elseif ( is_callable( 'add_action' ) ) {
 				add_action(
 					'admin_notices',
 					function() {
 						echo '<div class="error"><p>Timber ACF WP Blocks requires Timber and ACF.';
-						echo 'Check the plugins are installed and activated.</p></div>';
+						echo 'Check if the plugins or libraries are installed and activated.</p></div>';
 					}
 				);
 			}
@@ -82,6 +82,7 @@ if ( ! class_exists( 'Timber_Acf_Wp_Blocks' ) ) {
 							'enqueue_assets'             => 'EnqueueAssets',
 							'supports_custom_class_name' => 'SupportsCustomClassName',
 							'supports_reusable'          => 'SupportsReusable',
+							'supports_full_height'       => 'SupportsFullHeight',
 							'example'                    => 'Example',
 							'supports_jsx'               => 'SupportsJSX',
 							'parent'                     => 'Parent',
@@ -98,19 +99,17 @@ if ( ! class_exists( 'Timber_Acf_Wp_Blocks' ) ) {
 
 					// Set up block data for registration.
 					$data = array(
-						'name'                       => $slug,
-						'title'                      => $file_headers['title'],
-						'description'                => $file_headers['description'],
-						'category'                   => $file_headers['category'],
-						'icon'                       => $file_headers['icon'],
-						'keywords'                   => $keywords,
-						'mode'                       => $file_headers['mode'],
-						'align'                      => $file_headers['align'],
-						'render_callback'            => array( __CLASS__, 'timber_blocks_callback' ),
-						'enqueue_assets'             => $file_headers['enqueue_assets'],
-						'supports_custom_class_name' => 'SupportsCustomClassName',
-						'supports_reusable'          => 'SupportsReusable',
-						'default_data'               => $file_headers['default_data'],
+						'name'            => $slug,
+						'title'           => $file_headers['title'],
+						'description'     => $file_headers['description'],
+						'category'        => $file_headers['category'],
+						'icon'            => $file_headers['icon'],
+						'keywords'        => $keywords,
+						'mode'            => $file_headers['mode'],
+						'align'           => $file_headers['align'],
+						'render_callback' => array( __CLASS__, 'timber_blocks_callback' ),
+						'enqueue_assets'  => $file_headers['enqueue_assets'],
+						'default_data'    => $file_headers['default_data'],
 					);
 
 					// Removes empty defaults.
@@ -162,6 +161,13 @@ if ( ! class_exists( 'Timber_Acf_Wp_Blocks' ) ) {
 							( 'true' === $file_headers['supports_reusable'] ) ? true : false;
 					}
 
+					// If the SupportsFullHeight is set in the templates it adds a posibility to
+					// make this block full height.
+					if ( ! empty( $file_headers['supports_full_height'] ) ) {
+						$data['supports']['full_height'] =
+							( 'true' === $file_headers['supports_full_height'] ) ? true : false;
+					}
+
 					// Gives a possibility to enqueue style. If not an absoulte URL than adds
 					// theme directory.
 					if ( ! empty( $file_headers['enqueue_style'] ) ) {
@@ -183,6 +189,7 @@ if ( ! class_exists( 'Timber_Acf_Wp_Blocks' ) ) {
 							$data['enqueue_script'] = $file_headers['enqueue_script'];
 						}
 					}
+
 					// Support for experimantal JSX.
 					if ( ! empty( $file_headers['supports_jsx'] ) ) {
 						// Leaving the experimaental part for 2 versions.
