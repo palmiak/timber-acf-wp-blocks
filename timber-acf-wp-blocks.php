@@ -35,17 +35,37 @@ if ( ! class_exists( 'Timber_Acf_Wp_Blocks' ) ) {
 		 */
 		public static function timber_block_init() {
 			// Get an array of directories containing blocks.
-			$directories = self::timber_block_directory_getter();
+			$directories = new ArrayIterator(self::timber_block_directory_getter());
 
 			// Check whether ACF exists before continuing.
 			foreach ( $directories as $dir ) {
 				// Sanity check whether the directory we're iterating over exists first.
-				if ( ! file_exists( \locate_template( $dir ) ) ) {
-					return;
+				
+				// Make assurances we're looking in the right directory paths, if someone set the entire path themselves
+				if (!is_dir( $dir )) {
+					if ( ! file_exists( \locate_template( $dir ) ) ) {
+						return;
+					}
+
+					$dir_path = \locate_template( $dir );
+				}
+				else{
+					if ( ! file_exists(  $dir  ) ) {
+						continue;
+					}
+
+					$dir_path =  $dir;
+				}
+				
+				//If a child theme is activated, make sure the parent gets included. 
+				//It's important that the parent is loaded last so that they can be extended in the child
+				if ($dir_path !== TEMPLATEPATH . '/' . $dir ) {
+					$directories->append(TEMPLATEPATH . '/' . $dir);
 				}
 
 				// Iterate over the directories provided and look for templates.
-				$template_directory = new DirectoryIterator( \locate_template( $dir ) );
+				$template_directory = new DirectoryIterator(  $dir_path  );
+
 				foreach ( $template_directory as $template ) {
 
 					if ( $template->isDot() || $template->isDir() ) {
@@ -61,7 +81,7 @@ if ( ! class_exists( 'Timber_Acf_Wp_Blocks' ) ) {
 					$slug = $file_parts['filename'];
 
 					// Get header info from the found template file(s).
-					$file_path    = locate_template( $dir . "/${slug}.twig" );
+					$file_path    = $dir_path . "/${slug}.twig";
 					$file_headers = get_file_data(
 						$file_path,
 						array(
@@ -324,12 +344,27 @@ if ( ! class_exists( 'Timber_Acf_Wp_Blocks' ) ) {
 
 			foreach ( $directories as $base_directory ) {
 				// Check if the folder exist.
-				if ( ! file_exists( \locate_template( $base_directory ) ) ) {
+				if (!is_dir($base_directory )) {
+					if ( ! file_exists( \locate_template($base_directory ) ) ) {
+						return;
+					}
+
+					$dir_path = \locate_template($base_directory );
+				}
+				else{
+					if ( ! file_exists( $base_directory  ) ) {
+						continue;
+					}
+
+					$dir_path = $base_directory;
+				}
+				
+				if ( ! file_exists( $dir_path ) ) {
 					continue;
 				}
 
 				$template_directory = new RecursiveDirectoryIterator(
-					\locate_template( $base_directory ),
+					$dir_path,
 					FilesystemIterator::KEY_AS_PATHNAME | FilesystemIterator::CURRENT_AS_SELF
 				);
 
