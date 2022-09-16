@@ -385,7 +385,8 @@ if ( ! class_exists( 'Timber_Acf_Wp_Blocks' ) ) {
 			if ( is_array( $data_array ) ) {
 				$data = array_merge( $data_array, $data );
 			}
-
+			
+			$data = apply_filters( 'timber/acf-gutenberg-blocks-default-data-after', $data );
 			return $data;
 		}
 	}
