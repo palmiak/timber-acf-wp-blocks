@@ -74,6 +74,7 @@ if ( ! class_exists( 'Timber_Acf_Wp_Blocks' ) ) {
 							'align'                      => 'Align',
 							'post_types'                 => 'PostTypes',
 							'supports_align'             => 'SupportsAlign',
+							'supports_align_content'     => 'SupportsAlignContent',
 							'supports_mode'              => 'SupportsMode',
 							'supports_multiple'          => 'SupportsMultiple',
 							'supports_anchor'            => 'SupportsAnchor',
@@ -127,6 +128,12 @@ if ( ! class_exists( 'Timber_Acf_Wp_Blocks' ) ) {
 							in_array( $file_headers['supports_align'], array( 'true', 'false' ), true ) ?
 							filter_var( $file_headers['supports_align'], FILTER_VALIDATE_BOOLEAN ) :
 							explode( ' ', $file_headers['supports_align'] );
+					}
+					// If the SupportsAlignContent header is set in the template, restrict this block
+					// to those aligns.
+					if ( ! empty( $file_headers['supports_align_content'] ) ) {
+						$data['supports']['alignContent'] = ('true' === $file_headers['supports_align_content']) ? 
+							true : (('matrix' === $file_headers['supports_align_content']) ? "matrix" : false);
 					}
 					// If the SupportsMode header is set in the template, restrict this block
 					// mode feature.
