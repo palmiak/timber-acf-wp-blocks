@@ -14,6 +14,7 @@ When creating blocks, you can include any of the following parameters.
  EnqueueScript:
  EnqueueAssets: (function callback)
  SupportsAlign: (space-separated)
+ SupportsAlignContent: (true|matrix)
  SupportsAnchor: (true|false)
  SupportsCustomClassName: (true|false)
  SupportsMode: (true|false)
