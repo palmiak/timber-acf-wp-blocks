@@ -1,15 +1,19 @@
 <p align="center">
-  <img src="timber-wp-acf-blocks.png">
+  <img src=".github/assets/timber-wp-acf-blocks.png" alt="Timber ACF WP Blocks logo">
 </p>
 
 # Timber ACF WP Blocks
+
 Generate ACF Gutenberg blocks just by adding templates to your Timber theme. This package is based heavily on [this article](https://medium.com/nicooprat/acf-blocks-avec-gutenberg-et-sage-d8c20dab6270) by [nicoprat](https://github.com/nicooprat) and the [plugin](https://github.com/MWDelaney/sage-acf-wp-blocks) by [MWDelaney](https://github.com/MWDelaney).
 
 ## Complete documentation
+
 [Read the complete documentation](https://palmiak.github.io/timber-acf-wp-blocks/#/)
 
 ## Contributors
+
 This plugin is build with help of contributors:
+
 - [roylodder](https://github.com/roylodder)
 - [BrentWMiller](https://github.com/BrentWMiller)
 - [Marcin Krzemiński](https://github.com/marcinkrzeminski)
@@ -17,9 +21,10 @@ This plugin is build with help of contributors:
 - [LandWire](https://github.com/landwire)
 - [Viktor Szépe](https://github.com/szepeviktor)
 
-
 ## Creating blocks
+
 Add twig templates to `views/blocks` which get and use ACF data. Each template requires a comment block with some data in it:
+
 ```twig
 {#
   Title: Testimonial
@@ -51,4 +56,5 @@ Add twig templates to `views/blocks` which get and use ACF data. Each template r
 ```
 
 ## Timber 2.0
+
 **Timber ACF WP Blocks** is fully compatible with both **Timber 1.x** and **Timber 2.x** versions.
