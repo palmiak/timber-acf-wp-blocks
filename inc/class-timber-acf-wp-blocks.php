@@ -6,26 +6,23 @@ use Timber\Timber;
  * Main Timber_Acf_Wp_Block Class
  */
 class Timber_Acf_Wp_Blocks {
+
 	/**
 	 * Constructor
 	 */
 	public function __construct() {
-		if ( is_callable( 'add_action' )
-			&& is_callable( 'acf_register_block_type' )
-			&& class_exists( 'Timber' )
-			) {
+		if ( function_exists( 'acf_register_block_type' ) && class_exists( 'Timber' ) ) {
 			add_action( 'acf/init', array( __CLASS__, 'timber_block_init' ), 10, 0 );
-		} elseif ( is_callable( 'add_action' ) ) {
+		} else {
 			add_action(
 				'admin_notices',
-				function() {
+				function () {
 					echo '<div class="error"><p>Timber ACF WP Blocks requires Timber and ACF.';
 					echo 'Check if the plugins or libraries are installed and activated.</p></div>';
 				}
 			);
 		}
 	}
-
 
 	/**
 	 * Create blocks based on templates found in Timber's "views/blocks" directory
@@ -38,7 +35,7 @@ class Timber_Acf_Wp_Blocks {
 		foreach ( $directories as $dir ) {
 			// Sanity check whether the directory we're iterating over exists first.
 			if ( ! file_exists( \locate_template( $dir ) ) ) {
-				return;
+				continue;
 			}
 
 			// Iterate over the directories provided and look for templates.
@@ -129,47 +126,43 @@ class Timber_Acf_Wp_Blocks {
 				// If the SupportsAlignContent header is set in the template, restrict this block
 				// to those aligns.
 				if ( ! empty( $file_headers['supports_align_content'] ) ) {
-					$data['supports']['alignContent'] = ('true' === $file_headers['supports_align_content']) ? 
-						true : (('matrix' === $file_headers['supports_align_content']) ? "matrix" : false);
+					$data['supports']['alignContent'] =
+						('true' === $file_headers['supports_align_content'])
+						? true
+						: ('matrix' === $file_headers['supports_align_content'] ? 'matrix' : false);
 				}
 				// If the SupportsMode header is set in the template, restrict this block
 				// mode feature.
 				if ( ! empty( $file_headers['supports_mode'] ) ) {
-					$data['supports']['mode'] =
-						( 'true' === $file_headers['supports_mode'] ) ? true : false;
+					$data['supports']['mode'] = 'true' === $file_headers['supports_mode'];
 				}
 				// If the SupportsMultiple header is set in the template, restrict this block
 				// multiple feature.
 				if ( ! empty( $file_headers['supports_multiple'] ) ) {
-					$data['supports']['multiple'] =
-						( 'true' === $file_headers['supports_multiple'] ) ? true : false;
+					$data['supports']['multiple'] = 'true' === $file_headers['supports_multiple'];
 				}
 				// If the SupportsAnchor header is set in the template, restrict this block
 				// anchor feature.
 				if ( ! empty( $file_headers['supports_anchor'] ) ) {
-					$data['supports']['anchor'] =
-						( 'true' === $file_headers['supports_anchor'] ) ? true : false;
+					$data['supports']['anchor'] = 'true' === $file_headers['supports_anchor'];
 				}
 
 				// If the SupportsCustomClassName is set to false hides the possibilty to
 				// add custom class name.
 				if ( ! empty( $file_headers['supports_custom_class_name'] ) ) {
-					$data['supports']['customClassName'] =
-						( 'true' === $file_headers['supports_custom_class_name'] ) ? true : false;
+					$data['supports']['customClassName'] = 'true' === $file_headers['supports_custom_class_name'];
 				}
 
 				// If the SupportsReusable is set in the templates it adds a posibility to
 				// make this block reusable.
 				if ( ! empty( $file_headers['supports_reusable'] ) ) {
-					$data['supports']['reusable'] =
-						( 'true' === $file_headers['supports_reusable'] ) ? true : false;
+					$data['supports']['reusable'] = 'true' === $file_headers['supports_reusable'];
 				}
 
 				// If the SupportsFullHeight is set in the templates it adds a posibility to
 				// make this block full height.
 				if ( ! empty( $file_headers['supports_full_height'] ) ) {
-					$data['supports']['full_height'] =
-						( 'true' === $file_headers['supports_full_height'] ) ? true : false;
+					$data['supports']['full_height'] = 'true' === $file_headers['supports_full_height'];
 				}
 
 				// Gives a possibility to enqueue style. If not an absoulte URL than adds
@@ -197,16 +190,14 @@ class Timber_Acf_Wp_Blocks {
 				// Support for experimantal JSX.
 				if ( ! empty( $file_headers['supports_jsx'] ) ) {
 					// Leaving the experimaental part for 2 versions.
-					$data['supports']['__experimental_jsx'] =
-						( 'true' === $file_headers['supports_jsx'] ) ? true : false;
-					$data['supports']['jsx']                =
-						( 'true' === $file_headers['supports_jsx'] ) ? true : false;
+					$data['supports']['__experimental_jsx'] = 'true' === $file_headers['supports_jsx'];
+					$data['supports']['jsx']                = 'true' === $file_headers['supports_jsx'];
 				}
 
 				// Support for "example".
 				if ( ! empty( $file_headers['example'] ) ) {
 					$json                       = json_decode( $file_headers['example'], true );
-					$example_data               = ( null !== $json ) ? $json : array();
+					$example_data               = null === $json ? array() : $json;
 					$example_data['is_example'] = true;
 					$data['example']            = array(
 						'attributes' => array(
@@ -369,8 +360,8 @@ class Timber_Acf_Wp_Blocks {
 	/**
 	 * Default options setter.
 	 *
-	 * @param  [array] $data - header set data.
-	 * @return [array]
+	 * @param  array $data Header set data.
+	 * @return array
 	 */
 	public static function timber_block_default_data( $data ) {
 		$default_data = apply_filters( 'timber/acf-gutenberg-blocks-default-data', array() );
