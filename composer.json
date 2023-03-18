@@ -1,6 +1,7 @@
 {
   "name": "palmiak/timber-acf-wp-blocks",
   "description": "Create Gutenberg blocks from Twig templates and ACF fields.",
+  "type": "wordpress-plugin",
   "keywords": ["wordpress", "gutenberg", "advanced custom fields"],
   "require": {
       "php": ">=5.6"
@@ -23,7 +24,12 @@
       "files": ["timber-acf-wp-blocks.php"]
   },
   "require-dev": {
-      "wp-coding-standards/wpcs": "2.0",
-      "dealerdirect/phpcodesniffer-composer-installer": "0.5.0"
+      "wp-coding-standards/wpcs": "^2.0",
+      "dealerdirect/phpcodesniffer-composer-installer": "^1.0"
+  },
+  "config": {
+    "allow-plugins": {
+      "dealerdirect/phpcodesniffer-composer-installer": true
+    }
   }
 }
