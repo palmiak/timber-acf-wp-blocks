@@ -1,12 +1,16 @@
 {
-  "name": "palmiak/timber-acf-wp-blocks",
+  "name": "bartnovak/timber-acf-wp-blocks",
   "description": "Create Gutenberg blocks from Twig templates and ACF fields.",
   "keywords": ["wordpress", "gutenberg", "advanced custom fields"],
   "require": {
       "php": ">=5.6"
   },
   "license": "MIT",
-  "authors": [
+    "authors": [
+      {
+        "name": "OsomStudio",
+        "email": "b.nowak@osomstudio.com"
+      },
       {
           "name": "Maciej Palmowski",
           "email": "m.palmowski@freshpixels.pl"
