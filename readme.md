@@ -52,3 +52,7 @@ Add twig templates to `views/blocks` which get and use ACF data. Each template r
 
 ## Timber 2.0
 **Timber ACF WP Blocks** is fully compatible with both **Timber 1.x** and **Timber 2.x** versions.
+
+## How can I report security bugs?
+
+You can report security bugs through the Patchstack Vulnerability Disclosure Program. The Patchstack team helps validate, triage, and handle any security vulnerabilities. [Report a security vulnerability.](https://patchstack.com/database/vdp/7e30249d-c84c-42d1-81b7-2c9238f86638)
