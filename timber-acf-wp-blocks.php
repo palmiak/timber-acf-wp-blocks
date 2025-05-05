@@ -61,7 +61,7 @@ if ( ! class_exists( 'Timber_Acf_Wp_Blocks' ) ) {
 					$slug = $file_parts['filename'];
 
 					// Get header info from the found template file(s).
-					$file_path    = locate_template( $dir . "/${slug}.twig" );
+					$file_path    = locate_template( $dir . "/{$slug}.twig" );
 					$file_headers = get_file_data(
 						$file_path,
 						array(
@@ -132,7 +132,7 @@ if ( ! class_exists( 'Timber_Acf_Wp_Blocks' ) ) {
 					// If the SupportsAlignContent header is set in the template, restrict this block
 					// to those aligns.
 					if ( ! empty( $file_headers['supports_align_content'] ) ) {
-						$data['supports']['alignContent'] = ('true' === $file_headers['supports_align_content']) ? 
+						$data['supports']['alignContent'] = ('true' === $file_headers['supports_align_content']) ?
 							true : (('matrix' === $file_headers['supports_align_content']) ? "matrix" : false);
 					}
 					// If the SupportsMode header is set in the template, restrict this block
