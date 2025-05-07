@@ -240,8 +240,9 @@ if ( ! class_exists( 'Timber_Acf_Wp_Blocks' ) ) {
 		 * @param string $content    content passed to block.
 		 * @param bool   $is_preview checks if block is in preview mode.
 		 * @param int    $post_id    Post ID.
+		 * @param object $wp_block   WP_Block object
 		 */
-		public static function timber_blocks_callback( $block, $content = '', $is_preview = false, $post_id = 0 ) {
+		public static function timber_blocks_callback( $block, $content = '', $is_preview = false, $post_id = 0, $wp_block ) {
 			// Context compatibility.
 			if ( method_exists( 'Timber', 'context' ) ) {
 				$context = Timber::context();
@@ -252,6 +253,7 @@ if ( ! class_exists( 'Timber_Acf_Wp_Blocks' ) ) {
 			// Set up the slug to be useful.
 			$slug = str_replace( 'acf/', '', $block['name'] );
 
+			$context['wp_block']   = $wp_block;
 			$context['block']      = $block;
 			$context['post_id']    = $post_id;
 			$context['slug']       = $slug;
