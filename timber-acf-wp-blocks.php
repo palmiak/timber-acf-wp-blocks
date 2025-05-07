@@ -61,7 +61,7 @@ if ( ! class_exists( 'Timber_Acf_Wp_Blocks' ) ) {
 					$slug = $file_parts['filename'];
 
 					// Get header info from the found template file(s).
-					$file_path    = locate_template( $dir . "/${slug}.twig" );
+					$file_path    = locate_template( $dir . "/{$slug}.twig" );
 					$file_headers = get_file_data(
 						$file_path,
 						array(
